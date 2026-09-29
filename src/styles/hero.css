@@ -1,0 +1,396 @@
+/*
+ * الهاتف والجهاز اللوحي: الصور في الأعلى بقصّ يُبقي العنصر الرئيسي ظاهراً،
+ * والنص تحتها على البرقوقي الداكن. الحاسوب: النص فوق الصور في جهة البداية،
+ * وكل صورة تُزاح أفقياً (--fx) ليبقى عنصرها الرئيسي بعيداً عن النص في الاتجاهين.
+ */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  color: var(--c-on-dark);
+  background: var(--c-plum-deep);
+}
+
+.hero__media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 5 / 6;
+  max-height: 64svh;
+  overflow: hidden;
+}
+
+/* عمق خفيف مع التمرير: الصور تتحرك أبطأ من الصفحة */
+.hero__slides {
+  position: absolute;
+  inset: 0;
+  transform: translate3d(0, var(--hero-shift, 0px), 0);
+}
+
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  visibility: hidden;
+}
+
+.hero__slide.is-active,
+.hero__slide.is-previous {
+  visibility: visible;
+}
+
+.hero__slide.is-active {
+  z-index: 2;
+}
+
+.hero__slide.is-previous {
+  z-index: 1;
+}
+
+.hero__slide.is-entering {
+  animation: slide-in 1.2s var(--ease-out) both;
+}
+
+.hero__slide .pic {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__slide img {
+  transform-origin: calc(var(--fx, 0.5) * 100%) 60%;
+}
+
+.hero__slide.is-active img,
+.hero__slide.is-previous img {
+  animation: ken-burns calc(var(--interval, 7000ms) + 1600ms) linear both;
+}
+
+.hero.is-paused .hero__slide img {
+  animation-play-state: paused;
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ken-burns {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* طبقة برقوقية خفيفة، تشتد فقط حيث يلزم لوضوح النص */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(
+    to bottom,
+    rgb(92 19 55 / 0.1) 0%,
+    rgb(92 19 55 / 0.05) 48%,
+    rgb(58 11 34 / 0.72) 84%,
+    var(--c-plum-deep) 100%
+  );
+}
+
+.hero__caption {
+  position: absolute;
+  top: 14px;
+  inset-inline-end: var(--gutter);
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px 2px;
+  font-size: 0.75rem;
+  font-weight: var(--fw-medium);
+  line-height: 1.6;
+  color: var(--c-plum-deep);
+  background: rgb(255 255 255 / 0.68);
+  border-radius: var(--radius-pill);
+  animation: caption-in 0.6s var(--ease-out) both;
+}
+
+@keyframes caption-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.hero__path {
+  display: none;
+}
+
+/* ---------- أزرار العرض المتحرك ---------- */
+.slider-nav {
+  position: absolute;
+  bottom: calc(clamp(3rem, 12vw, 5.5rem) + 12px);
+  inset-inline-end: var(--gutter);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+  color: var(--c-on-dark);
+  background: rgb(28 6 17 / 0.58);
+  border-radius: var(--radius-pill);
+}
+
+.slider-nav__btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  transition: background-color var(--dur-fast);
+}
+
+@media (hover: hover) {
+  .slider-nav__btn:hover {
+    background: rgb(255 255 255 / 0.16);
+  }
+}
+
+.slider-nav :focus-visible {
+  outline-offset: -2px;
+}
+
+.icon--back {
+  transform: scaleX(calc(var(--dir) * -1));
+}
+
+.slider-nav__segments {
+  display: flex;
+  padding-inline: 4px 8px;
+}
+
+.seg {
+  display: grid;
+  align-items: center;
+  width: 26px;
+  height: 38px;
+  padding: 0 3px;
+  background: none;
+  border: 0;
+  border-radius: var(--radius-xs);
+}
+
+.seg__track {
+  position: relative;
+  display: block;
+  height: 3px;
+  overflow: hidden;
+  background: rgb(255 255 255 / 0.32);
+  border-radius: 2px;
+}
+
+.seg.is-done .seg__track {
+  background: rgb(255 255 255 / 0.8);
+}
+
+.seg.is-current .seg__track {
+  background: rgb(255 255 255 / 0.5);
+}
+
+.seg__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-sun);
+  transform-origin: left;
+  animation: seg-fill var(--interval, 7000ms) linear both;
+}
+
+[dir='rtl'] .seg__fill {
+  transform-origin: right;
+}
+
+.hero.is-paused .seg__fill {
+  animation-play-state: paused;
+}
+
+@keyframes seg-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ---------- النص ---------- */
+.hero__content {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+  margin-top: clamp(-5.5rem, -12vw, -3rem);
+  padding-bottom: clamp(3rem, 8vw, 4.5rem);
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--c-sun);
+}
+
+.hero__title {
+  max-width: 11em;
+  font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  color: var(--c-on-dark);
+}
+
+.hero__highlight {
+  color: var(--c-sun);
+}
+
+.hero__text {
+  max-width: 34rem;
+  font-size: var(--fs-md);
+  color: var(--c-on-dark-muted);
+  text-wrap: balance;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+@media (max-width: 479px) {
+  .hero__actions,
+  .hero__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (min-width: 700px) {
+  .hero__media {
+    aspect-ratio: 16 / 9;
+    max-height: 60svh;
+  }
+}
+
+@media (min-width: 1100px) {
+  .hero {
+    display: grid;
+    align-items: end;
+    min-height: clamp(620px, calc(100svh - var(--header-h)), 880px);
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    max-height: none;
+    aspect-ratio: auto;
+  }
+
+  /* الصورة أعرض من الشاشة بـ 30% وتُزاح لتضع عنصرها الرئيسي عند --hero-target */
+  .hero__slide .pic {
+    inset: 0 auto;
+    width: 130%;
+    max-width: none;
+    left: clamp(-30%, calc(var(--hero-target) * 100% - var(--fx, 0.5) * 130%), 0%);
+  }
+
+  .hero__scrim {
+    background:
+      linear-gradient(
+        var(--scrim-dir),
+        rgb(58 11 34 / 0.8) 0%,
+        rgb(58 11 34 / 0.5) 34%,
+        rgb(92 19 55 / 0.08) 62%,
+        rgb(92 19 55 / 0.02) 100%
+      ),
+      linear-gradient(to top, rgb(58 11 34 / 0.5) 0%, transparent 42%);
+  }
+
+  .hero__caption {
+    top: 24px;
+  }
+
+  .slider-nav {
+    bottom: clamp(4rem, 9vh, 6.5rem);
+    inset-inline-end: max(var(--gutter), calc((100% - var(--container)) / 2));
+  }
+
+  .hero__content {
+    margin-top: 0;
+    padding-block: var(--space-9) clamp(4rem, 9vh, 6.5rem);
+  }
+
+  .hero__title {
+    max-width: 9.2em;
+  }
+
+  :root[lang='en'] .hero__title {
+    max-width: 9.6em;
+  }
+
+  /* مسار رحلة رفيع يرتسم مرة واحدة فوق السماء */
+  .hero__path {
+    position: absolute;
+    top: 12%;
+    inset-inline-end: 7%;
+    z-index: 4;
+    display: block;
+    width: 46%;
+    height: auto;
+    overflow: visible;
+    pointer-events: none;
+    animation: path-in 2.6s var(--ease-out) 0.4s both;
+  }
+
+  [dir='ltr'] .hero__path {
+    transform: scaleX(-1);
+  }
+
+  /* البرقوقي يظهر فوق السماء المضيئة، ويذوب قرب النص الداكن */
+  .hero__path-line {
+    stroke: var(--c-plum-deep);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-dasharray: 0.1 10;
+    opacity: 0.55;
+  }
+
+  .hero__path-dot {
+    fill: var(--c-sun);
+  }
+
+  .hero__path-ring {
+    fill: var(--c-sun);
+    stroke: var(--c-plum-deep);
+    stroke-width: 2;
+  }
+}
+
+@keyframes path-in {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}

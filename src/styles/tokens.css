@@ -1,0 +1,204 @@
+/*
+ * متغيرات التصميم المركزية — هوية السهاد.
+ * اللونان الأساسيان مستخرجان مباشرة من ملف الشعار:
+ *   #5C1337 (البرقوقي، اللون الرئيسي)   #F2E32A (الأصفر، لون الإبراز)
+ *
+ * المكوّنات تستخدم أدواراً (سطح، نص، إبراز، زر…) لا ألواناً مباشرة،
+ * فيُعاد تعريف الأدوار وحدها في النمط الليلي.
+ */
+:root {
+  color-scheme: light;
+
+  /* الهوية — ثابتة في النمطين */
+  --c-plum: #5c1337;
+  --c-plum-deep: #3a0b22;
+  --c-sun: #f2e32a;
+  --c-sun-deep: #e3d31a;
+  --c-on-dark: #ffffff;
+  --c-on-dark-muted: rgb(255 255 255 / 0.84);
+
+  /* الأسطح */
+  --c-paper: #ffffff;
+  --c-paper-alt: #f8f4f6;
+  --c-surface: #ffffff;
+  --c-header: #ffffff;
+
+  /* النصوص — محايدات مائلة قليلاً إلى البرقوقي */
+  --c-ink: #22111a;
+  --c-ink-2: #4a3540;
+  --c-muted: #6d5963;
+  --c-placeholder: #86737c;
+  --c-line: #eadfe4;
+
+  /* الأدوار */
+  --c-accent: #5c1337;
+  --c-btn: #5c1337;
+  --c-btn-hover: #3a0b22;
+  --c-plum-soft: #f3e9ee;
+  --c-plum-line: #e3d2da;
+  --c-input-border: #a8899a;
+  --c-input-hover: #8a6a7b;
+  --c-focus-glow: rgb(92 19 55 / 0.2);
+  --c-tile: #fbf6cc;
+  --c-tile-fg: #5c1337;
+  --c-sun-soft: #fbf6cc;
+  --c-sun-line: #e6d96b;
+  --c-error: #b42318;
+  --c-error-glow: rgb(180 35 24 / 0.18);
+  --c-route-track: #e3d2da;
+  --c-logo-plate: transparent;
+  --logo-plate-pad: 0px;
+  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235c1337' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+
+  /* الخط */
+  --font-sans: 'Tajawal', 'Segoe UI', Tahoma, 'Geeza Pro', 'Noto Sans Arabic', system-ui, sans-serif;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-bold: 700;
+  --fw-xbold: 800;
+
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --fs-lg: clamp(1.25rem, 1.12rem + 0.55vw, 1.5rem);
+  --fs-xl: clamp(1.625rem, 1.3rem + 1.4vw, 2.25rem);
+  --fs-2xl: clamp(2rem, 1.45rem + 2.6vw, 3.4rem);
+  --fs-display: clamp(2.4rem, 1.5rem + 4.4vw, 5.1rem);
+
+  --lh-display: 1.12;
+  --lh-heading: 1.3;
+  --lh-body: 1.85;
+
+  /* المسافات */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --section-y: clamp(4.5rem, 3rem + 6vw, 8.5rem);
+  --gutter: clamp(1rem, 0.4rem + 2.6vw, 2.5rem);
+  --container: 1200px;
+
+  /* الحواف — حادة كزوايا الشعار */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-pill: 999px;
+  /* قطع الزاوية بزاوية 45° مأخوذ من الحواف المائلة في الشعار */
+  --cut: clamp(26px, 3.6vw, 52px);
+  --cut-sm: 12px;
+
+  /* الظلال — نادرة وخفيفة */
+  --shadow-sm: 0 1px 2px rgb(58 11 34 / 0.06);
+  --shadow-md: 0 12px 30px -12px rgb(58 11 34 / 0.38);
+  --shadow-header: 0 8px 24px -20px rgb(58 11 34 / 0.5);
+
+  /* الحركة */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur-base: 260ms;
+  --dur-slow: 720ms;
+
+  /* الترويسة واتجاه القراءة */
+  --header-h: 68px;
+  --dir: 1;
+  --scrim-dir: to right;
+  --hero-target: 0.66;
+}
+
+/* ---------- النمط الليلي ---------- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --c-paper: #140b11;
+    --c-paper-alt: #1b1017;
+    --c-surface: #22151c;
+    --c-header: #140b11;
+    --c-ink: #f6eef2;
+    --c-ink-2: #ddccd4;
+    --c-muted: #b39fa9;
+    --c-placeholder: #968089;
+    --c-line: #34232c;
+    --c-accent: #ecb6cf;
+    --c-btn: #7c2151;
+    --c-btn-hover: #962f67;
+    --c-plum-soft: #2d1822;
+    --c-plum-line: #4a3140;
+    --c-input-border: #86667a;
+    --c-input-hover: #a3849a;
+    --c-focus-glow: rgb(236 182 207 / 0.25);
+    --c-tile: rgb(242 227 42 / 0.1);
+    --c-tile-fg: #f2e32a;
+    --c-sun-soft: #2e2913;
+    --c-sun-line: #5e5520;
+    --c-error: #ff968c;
+    --c-error-glow: rgb(255 150 140 / 0.2);
+    --c-route-track: #3f2a36;
+    --c-logo-plate: #fbf7f9;
+    --logo-plate-pad: 6px 10px;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow-md: 0 14px 34px -12px rgb(0 0 0 / 0.7);
+    --shadow-header: 0 8px 24px -18px rgb(0 0 0 / 0.8);
+    --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ecb6cf' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --c-paper: #140b11;
+  --c-paper-alt: #1b1017;
+  --c-surface: #22151c;
+  --c-header: #140b11;
+  --c-ink: #f6eef2;
+  --c-ink-2: #ddccd4;
+  --c-muted: #b39fa9;
+  --c-placeholder: #968089;
+  --c-line: #34232c;
+  --c-accent: #ecb6cf;
+  --c-btn: #7c2151;
+  --c-btn-hover: #962f67;
+  --c-plum-soft: #2d1822;
+  --c-plum-line: #4a3140;
+  --c-input-border: #86667a;
+  --c-input-hover: #a3849a;
+  --c-focus-glow: rgb(236 182 207 / 0.25);
+  --c-tile: rgb(242 227 42 / 0.1);
+  --c-tile-fg: #f2e32a;
+  --c-sun-soft: #2e2913;
+  --c-sun-line: #5e5520;
+  --c-error: #ff968c;
+  --c-error-glow: rgb(255 150 140 / 0.2);
+  --c-route-track: #3f2a36;
+  --c-logo-plate: #fbf7f9;
+  --logo-plate-pad: 6px 10px;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow-md: 0 14px 34px -12px rgb(0 0 0 / 0.7);
+  --shadow-header: 0 8px 24px -18px rgb(0 0 0 / 0.8);
+  --chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23ecb6cf' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+/* ---------- الاتجاه واللغة ---------- */
+[dir='rtl'] {
+  --dir: -1;
+  --scrim-dir: to left;
+  --hero-target: 0.34;
+}
+
+/* الإنجليزية: أسطر أقصر ارتفاعاً وعنوان رئيسي أصغر قليلاً لأن الكلمات أطول */
+:root[lang='en'] {
+  --lh-body: 1.7;
+  --lh-display: 1.06;
+  --lh-heading: 1.22;
+  --fs-display: clamp(2.3rem, 1.4rem + 3.4vw, 4.1rem);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 84px;
+  }
+}

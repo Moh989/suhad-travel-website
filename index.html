@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="%SEO_LANG%" dir="%SEO_DIR%">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <!-- يطبّق اللغة والنمط المحفوظين قبل الرسم الأول لتجنّب الوميض -->
+    <script>%SEO_BOOT_SCRIPT%</script>
+    <!--head:start-->
+    <!-- القيم %SEO_*% تُملأ من src/content/site.js عند البناء؛ وفي index.php يكتبها الخادم من محتوى لوحة التحكم -->
+    <title>%SEO_TITLE%</title>
+    <meta name="description" content="%SEO_DESCRIPTION%" />
+    <meta name="theme-color" content="%SEO_THEME_COLOR%" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="%SEO_OG_LOCALE%" />
+    <meta property="og:locale:alternate" content="%SEO_OG_LOCALE_ALT%" />
+    <meta property="og:site_name" content="%SEO_SITE_NAME%" />
+    <meta property="og:title" content="%SEO_TITLE%" />
+    <meta property="og:description" content="%SEO_DESCRIPTION%" />
+    <meta property="og:image" content="%SEO_OG_IMAGE%" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="%SEO_OG_IMAGE_ALT%" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="%SEO_TITLE%" />
+    <meta name="twitter:description" content="%SEO_DESCRIPTION%" />
+    <meta name="twitter:image" content="%SEO_OG_IMAGE%" />
+    %SEO_CANONICAL%
+    %SEO_HERO_PRELOAD%
+    <!--head:end-->
+
+    <link rel="icon" type="image/png" href="brand/favicon.png" />
+    <link rel="apple-touch-icon" href="brand/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <noscript>
+      <p style="padding: 24px; font-family: Tajawal, Tahoma, sans-serif">
+        %SEO_SITE_NAME% — يرجى تفعيل JavaScript لعرض الموقع.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

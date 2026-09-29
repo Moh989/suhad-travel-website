@@ -1,0 +1,305 @@
+.site-header {
+  position: fixed;
+  top: 0;
+  inset-inline: 0;
+  z-index: 40;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: var(--c-header);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color var(--dur-base),
+    box-shadow var(--dur-base);
+}
+
+.site-header.is-scrolled,
+.site-header.is-open {
+  border-bottom-color: var(--c-line);
+}
+
+.site-header.is-scrolled {
+  box-shadow: var(--shadow-header);
+}
+
+.site-header__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  height: var(--header-h);
+}
+
+.brand {
+  flex: none;
+  margin-inline-end: auto;
+  border-radius: var(--radius-xs);
+}
+
+.brand img {
+  width: auto;
+  height: 46px;
+}
+
+/* ---------- قائمة الحاسوب ---------- */
+.primary-nav {
+  display: none;
+}
+
+.menu-toggle {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: var(--c-accent);
+  background: transparent;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+}
+
+.menu-toggle__icon {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 12px;
+}
+
+.menu-toggle__icon span {
+  position: absolute;
+  inset-inline: 0;
+  height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition:
+    transform var(--dur-base) var(--ease-out),
+    top var(--dur-base) var(--ease-out),
+    width var(--dur-base) var(--ease-out);
+}
+
+.menu-toggle__icon span:first-child {
+  top: 0;
+}
+
+.menu-toggle__icon span:last-child {
+  top: 10px;
+  width: 65%;
+}
+
+.menu-toggle[aria-expanded='true'] .menu-toggle__icon span {
+  top: 5px;
+  width: 100%;
+}
+
+.menu-toggle[aria-expanded='true'] .menu-toggle__icon span:first-child {
+  transform: rotate(45deg);
+}
+
+.menu-toggle[aria-expanded='true'] .menu-toggle__icon span:last-child {
+  transform: rotate(-45deg);
+}
+
+/* ---------- قائمة الهاتف ---------- */
+.mobile-menu {
+  position: fixed;
+  top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+  bottom: 0;
+  inset-inline: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  padding: var(--space-4) var(--gutter) calc(var(--space-6) + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--c-paper);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out),
+    visibility 0s linear 200ms;
+}
+
+.mobile-menu[data-open='true'] {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out),
+    visibility 0s;
+}
+
+.mobile-menu li a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 62px;
+  font-size: 1.375rem;
+  font-weight: var(--fw-xbold);
+  color: var(--c-ink);
+  border-bottom: 1px solid var(--c-line);
+}
+
+.mobile-menu li a .icon {
+  color: var(--c-plum-line);
+}
+
+.mobile-menu li a[aria-current] {
+  color: var(--c-accent);
+}
+
+.mobile-menu li a[aria-current] .icon {
+  color: var(--c-accent);
+}
+
+/* ---------- اللغة والنمط ---------- */
+.header-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.tool-btn {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font-size: 0.9375rem;
+  font-weight: var(--fw-xbold);
+  line-height: 1;
+  color: var(--c-accent);
+  background: transparent;
+  border: 1px solid var(--c-line);
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--dur-fast),
+    border-color var(--dur-fast);
+}
+
+.tool-btn--lang {
+  font-family: var(--font-sans);
+}
+
+@media (hover: hover) {
+  .tool-btn:hover,
+  .menu-toggle:hover {
+    background: var(--c-plum-soft);
+    border-color: var(--c-plum-line);
+  }
+}
+
+/* الشعار على لوحة فاتحة في النمط الليلي حتى تبقى ألوانه كما هي */
+.logo-plate {
+  padding: var(--logo-plate-pad);
+  background: var(--c-logo-plate);
+  border-radius: var(--radius-sm);
+}
+
+/* ---------- مسار الطائرة مع التمرير ---------- */
+.scroll-route {
+  position: absolute;
+  bottom: -1px;
+  inset-inline: 0;
+  height: 2px;
+  pointer-events: none;
+  opacity: clamp(0, calc(var(--page-progress, 0) * 60), 1);
+}
+
+.scroll-route::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, var(--c-route-track) 50%, transparent 0);
+  background-size: 8px 2px;
+}
+
+.scroll-route__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--c-sun);
+  transform: scaleX(var(--page-progress, 0));
+  transform-origin: left;
+}
+
+[dir='rtl'] .scroll-route__fill {
+  transform-origin: right;
+}
+
+.scroll-route__plane {
+  position: absolute;
+  top: -9px;
+  inset-inline-start: calc(var(--page-progress, 0) * (100% - 20px));
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  color: var(--c-accent);
+  background: var(--c-header);
+  border-radius: 50%;
+}
+
+/* الطائرة تتجه دائماً نحو اتجاه القراءة */
+.scroll-route__plane .icon {
+  transform: scaleX(var(--dir)) rotate(45deg);
+}
+
+@media (max-width: 639px) {
+  .header-cta {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand img {
+    height: 56px;
+  }
+
+  .menu-toggle,
+  .mobile-menu {
+    display: none;
+  }
+
+  .primary-nav {
+    display: block;
+    margin-inline-end: var(--space-4);
+  }
+
+  .header-tools {
+    margin-inline-end: var(--space-2);
+  }
+
+  .primary-nav ul {
+    display: flex;
+    gap: clamp(1.25rem, 2.2vw, 2.25rem);
+  }
+
+  .primary-nav a {
+    position: relative;
+    display: block;
+    padding-block: 0.5rem;
+    font-weight: var(--fw-medium);
+    color: var(--c-ink-2);
+    transition: color var(--dur-fast);
+  }
+
+  .primary-nav a::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 3px;
+    background: var(--c-sun);
+    transform: scaleX(0);
+    transition: transform var(--dur-base) var(--ease-out);
+  }
+
+  .primary-nav a:hover,
+  .primary-nav a[aria-current] {
+    color: var(--c-accent);
+  }
+
+  .primary-nav a:hover::after,
+  .primary-nav a[aria-current]::after {
+    transform: scaleX(1);
+  }
+}

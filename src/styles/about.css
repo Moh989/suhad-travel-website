@@ -1,0 +1,108 @@
+.about {
+  overflow: clip;
+}
+
+.about__grid {
+  display: grid;
+  gap: clamp(3.5rem, 7vw, 5rem);
+  align-items: center;
+}
+
+.about__text {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 34rem;
+}
+
+.about__text > p {
+  font-size: var(--fs-md);
+}
+
+.about__media {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  max-width: 34rem;
+  margin-inline-start: auto;
+  padding-bottom: 16%;
+}
+
+.about__figure {
+  display: grid;
+  gap: 10px;
+}
+
+.about__figure figcaption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--c-muted);
+}
+
+.about__figure figcaption::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+}
+
+.about__figure--main {
+  width: 86%;
+  margin-inline-start: auto;
+}
+
+.about__figure--main figcaption {
+  justify-self: end;
+}
+
+.about__figure--main .about__frame {
+  aspect-ratio: 4 / 5;
+  background: var(--c-plum-soft);
+}
+
+.about__figure--inset {
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  width: 52%;
+  padding: 8px 8px 10px;
+  background: var(--c-paper);
+}
+
+.about__figure--inset .about__frame {
+  aspect-ratio: 4 / 3;
+  background: var(--c-plum-soft);
+}
+
+.about__figure--inset figcaption {
+  padding-inline: 4px;
+}
+
+/* كتلة صفراء خلف الزاوية المقطوعة — كما تتراكب الأشكال في الشعار */
+.about__block {
+  position: absolute;
+  top: -14px;
+  inset-inline-end: -10px;
+  z-index: -1;
+  width: 34%;
+  height: 22%;
+  background: var(--c-sun);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 42% 100%, 0 58%);
+}
+
+[dir='ltr'] .about__block {
+  clip-path: polygon(0 0, 100% 0, 100% 58%, 58% 100%, 0 100%);
+}
+
+@media (min-width: 960px) {
+  .about__media {
+    max-width: none;
+  }
+
+  .about__grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(3rem, 7vw, 7rem);
+  }
+}

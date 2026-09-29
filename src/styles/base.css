@@ -1,0 +1,456 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 8px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-body);
+  color: var(--c-ink-2);
+  background: var(--c-paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--c-ink);
+  font-weight: var(--fw-xbold);
+  line-height: var(--lh-heading);
+  text-wrap: balance;
+}
+
+p,
+figure,
+dl,
+dd,
+pre {
+  margin: 0;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* تتبّع أضيق قليلاً لحروف Tajawal اللاتينية فقط؛ العربية لا تُباعَد حروفها أبداً */
+:root[lang='en'] body {
+  letter-spacing: -0.006em;
+}
+
+:root[lang='en'] h1,
+:root[lang='en'] h2 {
+  letter-spacing: -0.018em;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--c-sun);
+  color: var(--c-plum-deep);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring, var(--c-accent));
+  outline-offset: 3px;
+}
+
+.on-dark {
+  --focus-ring: var(--c-sun);
+}
+
+main:focus,
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+/* ---------- تخطيط ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+main {
+  padding-top: calc(var(--header-h) + env(safe-area-inset-top, 0px));
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: -100px;
+  inset-inline-start: 16px;
+  z-index: 100;
+  padding: 12px 18px;
+  background: var(--c-plum);
+  color: var(--c-on-dark);
+  font-weight: var(--fw-bold);
+  border-radius: var(--radius-sm);
+}
+
+.skip-link:focus {
+  top: calc(12px + env(safe-area-inset-top, 0px));
+}
+
+/* ---------- عناوين الأقسام ---------- */
+.section-head {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+}
+
+.eyebrow {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  line-height: 1.4;
+  color: var(--c-accent);
+}
+
+/* متوازي أضلاع صغير — من أشكال الشعار */
+.eyebrow__mark {
+  flex: none;
+  width: 22px;
+  height: 8px;
+  background: var(--c-sun);
+  transform: skewX(calc(var(--dir) * 40deg));
+}
+
+.section-title {
+  font-size: var(--fs-2xl);
+  line-height: 1.22;
+}
+
+.lead {
+  max-width: 36rem;
+  font-size: var(--fs-md);
+  color: var(--c-muted);
+}
+
+/* ---------- الأوسمة: مقترح / تجريبي ---------- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px 4px;
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  color: var(--c-accent);
+  white-space: nowrap;
+  background: var(--c-surface);
+  border: 1px dashed currentColor;
+  border-radius: var(--radius-pill);
+}
+
+.badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--c-sun);
+  border: 1px solid var(--c-accent);
+  border-radius: 50%;
+}
+
+.draft-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  max-width: 34rem;
+  padding: 12px 14px;
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--c-ink-2);
+  background: var(--c-surface);
+  border: 1px dashed var(--c-plum-line);
+  border-radius: var(--radius-sm);
+}
+
+.draft-note .icon {
+  flex: none;
+  margin-top: 3px;
+  color: var(--c-accent);
+}
+
+.pending {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--c-muted);
+}
+
+.pending::before {
+  content: '';
+  width: 14px;
+  height: 0;
+  border-top: 2px dashed var(--c-plum-line);
+}
+
+/* ---------- الأزرار ---------- */
+.btn {
+  --btn-bg: var(--c-btn);
+  --btn-fg: var(--c-on-dark);
+  --btn-border: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  min-height: 48px;
+  padding: 0.7rem 1.375rem 0.6rem;
+  font-size: 1rem;
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  text-align: center;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 1.5px solid var(--btn-border);
+  border-radius: var(--radius-sm);
+  transition:
+    background-color var(--dur-fast),
+    border-color var(--dur-fast),
+    color var(--dur-fast),
+    transform var(--dur-fast) var(--ease-out);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn .icon {
+  flex: none;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+
+.icon--dir {
+  transform: scaleX(var(--dir));
+}
+
+.btn--sun {
+  --btn-bg: var(--c-sun);
+  --btn-fg: var(--c-plum-deep);
+}
+
+.btn--outline-light {
+  --btn-bg: transparent;
+  --btn-fg: var(--c-on-dark);
+  --btn-border: rgb(255 255 255 / 0.72);
+}
+
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--c-accent);
+  --btn-border: var(--c-plum-line);
+}
+
+.btn--text {
+  --btn-bg: transparent;
+  --btn-fg: var(--c-accent);
+  min-height: 44px;
+  padding-inline: 0;
+}
+
+.btn--lg {
+  min-height: 54px;
+  padding-inline: 1.75rem;
+  font-size: 1.0625rem;
+}
+
+.btn--sm {
+  min-height: 42px;
+  padding: 0.5rem 1.05rem 0.4rem;
+  font-size: 0.9375rem;
+}
+
+.btn--block {
+  width: 100%;
+}
+
+@media (hover: hover) {
+  .btn--plum:hover {
+    --btn-bg: var(--c-btn-hover);
+  }
+  .btn--sun:hover {
+    --btn-bg: var(--c-sun-deep);
+  }
+  .btn--outline-light:hover {
+    --btn-bg: rgb(255 255 255 / 0.12);
+    --btn-border: var(--c-on-dark);
+  }
+  .btn--ghost:hover {
+    --btn-bg: var(--c-plum-soft);
+    --btn-border: var(--c-accent);
+  }
+  .btn--text:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 7px;
+  }
+  .btn:hover .icon--dir {
+    transform: scaleX(var(--dir)) translateX(3px);
+  }
+}
+
+/* ---------- قطع الزاوية (من الشعار) ---------- */
+.cut {
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut));
+}
+
+[dir='ltr'] .cut {
+  clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%);
+}
+
+.pic,
+.pic img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pic img {
+  object-fit: cover;
+  object-position: var(--obj-pos, 50% 50%);
+}
+
+@media (max-width: 699px) {
+  .pic img {
+    object-position: var(--obj-pos-sm, var(--obj-pos, 50% 50%));
+  }
+}
+
+/* ---------- عمق الصور مع التمرير (قيمة --py من useScrollEffects) ---------- */
+[data-parallax] {
+  overflow: hidden;
+}
+
+[data-parallax] img {
+  scale: var(--zoom, 1);
+  transition: scale 900ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-parallax] {
+    --zoom: 1.12;
+  }
+
+  [data-parallax] img {
+    translate: 0 var(--py, 0px);
+  }
+}
+
+/* انتقال لوني قصير عند تبديل النمط فقط */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease,
+    border-color 0.35s ease !important;
+}
+
+/* ---------- الظهور أثناء التمرير ---------- */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.is-revealing {
+  animation: reveal var(--dur-slow) var(--ease-out) var(--reveal-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

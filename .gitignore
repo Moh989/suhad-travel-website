@@ -1,0 +1,9 @@
+node_modules
+dist
+artifact-preview
+.DS_Store
+.local
+server/api/defaults.json
+# أسرار محلية
+server/api/_config.local.php
+local.env

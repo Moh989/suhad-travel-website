@@ -1,0 +1,168 @@
+.destinations__head {
+  display: grid;
+  gap: var(--space-5);
+  margin-bottom: clamp(2.75rem, 5vw, 4.5rem);
+}
+
+.destinations__intro {
+  display: grid;
+  gap: var(--space-4);
+  align-content: end;
+}
+
+.dest-grid {
+  display: grid;
+  gap: clamp(3rem, 5vw, 4rem) clamp(1.25rem, 2.6vw, 2.25rem);
+}
+
+.dest-card {
+  --ar: 4 / 3;
+  display: grid;
+  gap: var(--space-5);
+  align-content: start;
+}
+
+.dest-card__media {
+  position: relative;
+  aspect-ratio: var(--ar);
+  overflow: hidden;
+  background: var(--c-plum-soft);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .dest-card:hover .dest-card__media {
+    --zoom: 1.17;
+  }
+}
+
+.dest-card__badge {
+  position: absolute;
+  top: 14px;
+  inset-inline-start: 14px;
+}
+
+.dest-card__body {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+}
+
+.dest-card__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+  color: var(--c-accent);
+}
+
+.dest-card__name {
+  font-size: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+  line-height: 1.25;
+}
+
+.dest-card__text {
+  max-width: 32rem;
+  color: var(--c-muted);
+}
+
+.dest-card__program {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding-block: var(--space-3);
+  font-size: var(--fs-sm);
+  border-block: 1px solid var(--c-line);
+}
+
+.dest-card__program div {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: var(--space-3);
+}
+
+.dest-card__program dt {
+  font-weight: var(--fw-bold);
+  color: var(--c-ink);
+}
+
+.dest-card .btn--text {
+  margin-top: var(--space-1);
+}
+
+@media (min-width: 640px) {
+  .dest-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dest-card {
+    --ar: 4 / 5;
+  }
+
+  .dest-card:first-child {
+    --ar: 16 / 9;
+    grid-column: 1 / -1;
+  }
+}
+
+/* الجهاز اللوحي: إن بقيت بطاقة أخيرة وحدها في الصف تمتد بعرضه */
+@media (min-width: 640px) and (max-width: 1023px) {
+  .dest-card:last-child:nth-child(even) {
+    --ar: 16 / 9;
+    grid-column: 1 / -1;
+  }
+}
+
+/*
+ * الحاسوب: تكوين مجلة — بطاقة رئيسية أفقية، ثم نمط متكرر من خمس بطاقات:
+ * ثلاث بطاقات عمودية (الوسطى منزاحة للأسفل)، ثم عريضة + ضيقة.
+ */
+@media (min-width: 1024px) {
+  .destinations__head {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: end;
+    gap: clamp(2rem, 6vw, 6rem);
+  }
+
+  .dest-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .dest-card:first-child {
+    --ar: 4 / 3;
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: center;
+    padding-bottom: var(--space-4);
+  }
+
+  .dest-card:first-child .dest-card__name {
+    font-size: var(--fs-2xl);
+  }
+
+  .dest-card:first-child .dest-card__text {
+    font-size: var(--fs-md);
+  }
+
+  .dest-card:nth-child(5n + 2),
+  .dest-card:nth-child(5n + 3),
+  .dest-card:nth-child(5n + 4) {
+    --ar: 4 / 5;
+    grid-column: span 4;
+  }
+
+  .dest-card:nth-child(5n + 3) {
+    margin-top: var(--space-8);
+  }
+
+  .dest-card:nth-child(5n + 5) {
+    --ar: 16 / 9;
+    grid-column: span 7;
+  }
+
+  .dest-card:nth-child(5n + 6) {
+    --ar: 5 / 4;
+    grid-column: span 5;
+  }
+}

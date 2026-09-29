@@ -1,0 +1,74 @@
+.cta-band {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  padding-block: clamp(4.5rem, 9vw, 7.5rem);
+  color: var(--c-on-dark);
+  background: var(--c-plum);
+}
+
+/* عمودان مائلان بدرجة أغمق من البرقوقي — صدى للعمودين الأصفرين في الشعار */
+.cta-band__shapes {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: clamp(-60px, -4vw, -20px);
+  z-index: -1;
+  display: flex;
+  gap: clamp(10px, 1.4vw, 18px);
+  width: clamp(150px, 24vw, 330px);
+  pointer-events: none;
+}
+
+.cta-band__shapes i {
+  flex: 1;
+  background: var(--c-plum-deep);
+  opacity: 0.55;
+}
+
+.cta-band__shapes i:first-child {
+  clip-path: polygon(0 16%, 100% 0, 100% 84%, 0 100%);
+}
+
+.cta-band__shapes i:last-child {
+  clip-path: polygon(0 0, 100% 16%, 100% 100%, 0 84%);
+}
+
+.cta-band__inner {
+  display: grid;
+  gap: var(--space-6);
+  align-items: end;
+}
+
+.cta-band__title {
+  font-size: var(--fs-2xl);
+  line-height: 1.28;
+  color: var(--c-on-dark);
+}
+
+.cta-band__title span {
+  display: block;
+}
+
+.cta-band__accent {
+  color: var(--c-sun);
+}
+
+.cta-band__side {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-5);
+  max-width: 28rem;
+}
+
+.cta-band__side p {
+  font-size: var(--fs-md);
+  color: var(--c-on-dark-muted);
+}
+
+@media (min-width: 960px) {
+  .cta-band__inner {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    padding-inline-end: clamp(0px, 10vw, 140px);
+  }
+}
